@@ -1,7 +1,7 @@
 Summary: A documentation system for C/C++
 Name: doxygen
 Version: 1.6.1
-Release: 4%{?dist}
+Release: 6%{?dist}
 Epoch: 1
 Url: http://www.stack.nl/~dimitri/doxygen/index.html
 Source0: ftp://ftp.stack.nl/pub/users/dimitri/%{name}-%{version}.src.tar.gz
@@ -33,7 +33,7 @@ source files.
 Summary: A GUI for creating and editing configuration files
 Group: User Interface/X
 Requires: %{name} = %{epoch}:%{version}
-BuildRequires: qt-devel => 4.4
+BuildRequires: qt4-devel => 4.4
 
 %description doxywizard
 Doxywizard is a GUI for creating and editing configuration files that
@@ -62,6 +62,10 @@ sed -i -e "s|-o ../objects/language.o|-fno-merge-constants -fsection-anchors -o 
 
 make %{?_smp_mflags} all
 make docs
+
+pushd doc
+../bin/doxygen
+popd
 
 %install
 rm -rf %{buildroot}
@@ -100,6 +104,12 @@ rm -rf %{buildroot}
 %{_mandir}/man1/doxywizard*
 
 %changelog
+* Tue Jul 26 2011 Than Ngo <than@redhat.com> - 1:1.6.1-6
+- Resolves: bz#690076, Invalid BuildRequires on qt-devel
+
+* Wed Jul 13 2011 Than Ngo <than@redhat.com> - 1:1.6.1-5
+- Resolves: bz#690076, Invalid BuildRequires on qt-devel
+
 * Tue Jun 29 2010 Than Ngo <than@redhat.com> - 1:1.6.1-4
 - Resolves: bz#605147, fix multilib issue
 
